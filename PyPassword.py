@@ -32,6 +32,12 @@ def initialise():                                                               
   file.close()
 def addPassword(site,username,password):                                                            #adds a new password
   file=open("PyPassword.txt","r+")
-  masterKey=input("Please enter the master password:")
+  while True:
+    masterKey=input("Please enter the master password:")
+    checkDigits=file
+    checkDigits=checkDigits[:3]
+    matching=num_verif(checkDigits,masterKey)
+    if matching==True:
+      break
   
- 
+  
