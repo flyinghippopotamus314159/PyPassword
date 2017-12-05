@@ -38,7 +38,9 @@ def gen_password(length):
     secure_random = random.SystemRandom()
     password=password+str(secure_random.choice(character))
   return(password)
-def add_password(site,username,password):                                                            #adds a new password
+def encrypt(key,plaintext):                                                                             #encrypts
+  pass
+def add_password(site,username):                                                                        #adds a new password
   file=open("PyPassword.txt","r+")
   timeDelays=[0,0,5,15,60,120,300,1200,12000,120000]
   timeDelay=0
@@ -56,8 +58,6 @@ def add_password(site,username,password):                                       
         print("Locked for ",timeDelays[timeDelay]," seconds.")
       time.sleep(timeDelays[timeDelay])
       timeDelay=timeDelay+1
-  site=input("Please enter the site for which this password is for:")
-  username=input("Please enter your username for this site:")
   password=gen_password(len(masterKey))
     
   
