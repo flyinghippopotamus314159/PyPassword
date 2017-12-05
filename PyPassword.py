@@ -33,8 +33,10 @@ def initialise():                                                               
 def gen_password(length):
   import random
   character=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z','A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z','1','2','3','4','5']
+  password=""
   for i in range(length):
-    
+    secure_random = random.SystemRandom()
+    secure_random.choice(foo)
 def add_password(site,username,password):                                                            #adds a new password
   file=open("PyPassword.txt","r+")
   timeDelays=[0,0,5,15,60,120,300,1200,12000,120000]
