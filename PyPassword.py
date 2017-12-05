@@ -58,7 +58,7 @@ def add_password(site,username,password):                                       
       timeDelay=timeDelay+1
   site=input("Please enter the site for which this password is for:")
   username=input("Please enter your username for this site:")
-  password=gen_password()
+  password=gen_password(len(masterKey))
     
   
   
