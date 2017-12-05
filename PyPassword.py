@@ -36,7 +36,8 @@ def gen_password(length):
   password=""
   for i in range(length):
     secure_random = random.SystemRandom()
-    secure_random.choice(foo)
+    password=password+str(secure_random.choice(character))
+  return(password)
 def add_password(site,username,password):                                                            #adds a new password
   file=open("PyPassword.txt","r+")
   timeDelays=[0,0,5,15,60,120,300,1200,12000,120000]
