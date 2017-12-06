@@ -38,8 +38,8 @@ def gen_password(length):
     secure_random = random.SystemRandom()
     password=password+str(secure_random.choice(character))
   return(password)
-def encrypt(key,plaintext):                                                                             #encrypts
-  pass
+def encrypt(key,plaintext):                                                                             #encrypts password with a virgenre square cipher
+  for i in range(
 def add_password(site,username):                                                                        #adds a new password
   file=open("PyPassword.txt","r+")
   timeDelays=[0,0,5,15,60,120,300,1200,12000,120000]
