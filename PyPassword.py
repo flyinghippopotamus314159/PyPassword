@@ -28,7 +28,7 @@ def initialise():                                                               
       break
   numCheckDigit=num_check(masterKey)
   masterKey=""
-  file.write(str(str(numCheckDigit)+"|username:encryptedpassword;username:encryptedpassword"))
+  file.write(str(str(numCheckDigit)+"\nwebsite:username:encryptedpassword\n))
   file.close()
 def gen_password(length):
   import random
@@ -38,17 +38,27 @@ def gen_password(length):
     secure_random = random.SystemRandom()
     password=password+str(secure_random.choice(character))
   return(password)
-def encrypt(key,plaintext):                                                                             #encrypts password with a virgenre square cipher
-  for i in range(
+def encrypt(key,plainText):                                                                             #encrypts password with a virgenre square cipher
+  cipherText=""
+  for i in range(len(plainText)):
+    keyLetter=key[i]
+    plainTextLetter=plainText[i]
+    keyNum=ord(keyLetter)
+    plainTextNum=ord(plainText)
+    cipherNum=keyNum+plainTextNum
+    if cipherNum>=200:
+      cipherNum=chipherNum-200
+    chipherText=cipherText+chr(chipherNum)
+  return(cipherText)
 def add_password(site,username):                                                                        #adds a new password
   file=open("PyPassword.txt","r+")
-  timeDelays=[0,0,5,15,60,120,300,1200,12000,120000]
+  timeDelays=[0,0,5,15,60,120,300,1200,12000,120000]                                                    #time delay if wrong key entered
   timeDelay=0
   import time
   while True:
     masterKey=input("Please enter the master password:")
     checkDigits=file
-    checkDigits=checkDigits[:3]
+    checkDigits=checkDigits[:3]                                                                         #gets check digits
     matching=num_verif(checkDigits,masterKey)
     if matching==True:
       break
@@ -59,6 +69,19 @@ def add_password(site,username):                                                
       time.sleep(timeDelays[timeDelay])
       timeDelay=timeDelay+1
   password=gen_password(len(masterKey))
+  encyrtedPassword=encrypt(masterKey,password)
+  print("You're password is:",password)
+  file.close()                
+  textToAdd=str(str(site)+":"+str(username)+":"+str(encryptedPassword)+"\n")
+  file=open("PyPassword.txt","a")
+  file.write(textToAdd)
+  file.close()
+  print("Password Saved succssessfully")
+def get_username(site):                                                                              #gets a username
+  file=open("PyPassword.txt","r")
+  line=file.readline()
+  for i in range(1000):                                                                               #gets each line, one by one
+    line=file.readline()
     
   
   
