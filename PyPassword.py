@@ -1,4 +1,4 @@
-import random, webbrowser, re
+import webbrowser, re
 
 def num_check(password):  # creates a three-digit check number by converting the password to a number, finding the modulo in the base of the last three base ten digits of the rest of the number: there are 1000 possible numbers, but it will be the same for any password
     passNum = ""
@@ -36,7 +36,7 @@ def initialise():  # sets up the program when running for the first time
     masterKey = ""     #makes it harder to view master key once program run
     file.write(str(str(numCheckDigit) + "\nwebsite:username:encryptedpassword\n"))
     file.close()
-
+    print("Program Initialised successfully")
 
 def gen_password(length):
     import random
@@ -60,13 +60,11 @@ def encrypt(key, plainText):  # encrypts password with a virgenre square cipher
         cipherNum = keyNum + plainTextNum
         if cipherNum >= 200:
             cipherNum = cipherNum - 200
-        chipherText = cipherText + chr(cipherNum)
-        print(chipherText)
+        cipherText = cipherText + chr(cipherNum)
     return (cipherText)
 
-
-def add_password(site, username):  # adds a new password
-    file = open("PyPassword.txt", "r+")
+def recursive_check(site,username): #some passwords can't be encrypted-finds one that can
+    file = open("PyPassword.txt", "r+")  # generates and encrypts a password
     timeDelays = [0, 0, 5, 15, 60, 120, 300, 1200, 12000, 120000]  # time delay if wrong key entered
     timeDelay = 0
     import time
@@ -83,16 +81,26 @@ def add_password(site, username):  # adds a new password
                 print("Locked for ", timeDelays[timeDelay], " seconds.")
             time.sleep(timeDelays[timeDelay])
             timeDelay = timeDelay + 1
-    password = gen_password(len(masterKey))
-    encryptedPassword= encrypt(masterKey, password)
-    print("You're password is:", password)
-    file.close()
-    print(encryptedPassword)
-    textToAdd = str(str(site) + ":" + str(username) + ":" + str(encryptedPassword) + "\n")
-    file = open("PyPassword.txt", "a")
-    file.write(textToAdd)
-    file.close()
-    print("Password Saved successfully")
+    while True:
+        try:
+            password = gen_password(len(masterKey))
+            encryptedPassword = encrypt(masterKey, password)
+            print("Your password is:", password)
+            file.close()
+            print(encryptedPassword)
+            textToAdd = str(str(site) + ":" + str(username) + ":" + str(encryptedPassword) + "\n")
+            print("Saving Password...")
+            file = open("PyPassword.txt", "a")
+            file.write(textToAdd)
+            file.close()
+            break
+        except:
+            pass
+
+
+def add_password(site, username):  # adds a new password
+    recursive_check(site,username)
+    print("Password Saved successfully (USE LAST PRINTED PASSWORD)")
 
 
 def get_username(site):  # gets a username
@@ -117,7 +125,7 @@ def get_password(site):  # gets a password
                 encryptedPassword=splitLine[2]
                 masterKey=input("Please enter your master key to proceed")
                 decrypt=""
-                for i in range(len(encryptedPassword)):
+                for i in range((len(encryptedPassword))):
                     keyLetter = masterKey[i]
                     cipherTextLetter = encryptedPassword[i]
                     keyNum = ord(keyLetter)
@@ -126,7 +134,8 @@ def get_password(site):  # gets a password
                     if cipherNum<=0:
                         cipherNum=cipherNum+200
                     decrypt=decrypt+chr(cipherNum)
-                return(decrypt)
+                    if len(encryptedPassword)-2 == i:
+                        return(decrypt)
         except:
             pass
 
@@ -162,10 +171,3 @@ def main():
         elif choice=="5":
             break
 main()
-
-
-
-
-    
-  
-  
