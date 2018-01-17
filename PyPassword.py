@@ -81,22 +81,22 @@ def recursive_check(site,username): #some passwords can't be encrypted-finds one
                 print("Locked for ", timeDelays[timeDelay], " seconds.")
             time.sleep(timeDelays[timeDelay])
             timeDelay = timeDelay + 1
+    print("Generating Password. Standby...")
     while True:
         try:
+            print("...")
             password = gen_password(len(masterKey))
             encryptedPassword = encrypt(masterKey, password)
-            print("Your password is:", password)
             file.close()
-            print(encryptedPassword)
             textToAdd = str(str(site) + ":" + str(username) + ":" + str(encryptedPassword) + "\n")
-            print("Saving Password...")
             file = open("PyPassword.txt", "a")
             file.write(textToAdd)
             file.close()
             break
         except:
             pass
-
+    print("Saving Password...")
+    print("Your password is:", password)
 
 def add_password(site, username):  # adds a new password
     recursive_check(site,username)
