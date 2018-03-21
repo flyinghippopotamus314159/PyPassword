@@ -100,7 +100,7 @@ def recursive_check(site,username): #some passwords can't be encrypted-finds one
 
 def add_password(site, username):  # adds a new password
     recursive_check(site,username)
-    print("Password Saved successfully (USE LAST PRINTED PASSWORD)")
+    print("Password Saved successfully")
 
 
 def get_username(site):  # gets a username
